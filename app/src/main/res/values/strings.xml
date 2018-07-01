@@ -1,0 +1,59 @@
+<resources>
+    <string name="wheeclik_server_url">https://weeclik.herokuapp.com/parse</string>
+    <string name="wheeclik_app_id">JVQZMCuNYvnecPWvWFDTZa8A</string>
+    <string name="wheeclik_client_key"></string>
+
+    <string name="app_name">Weeclik</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="large_text">
+        "Material is the metaphor.\n\n"
+
+        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
+        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
+        "technologically advanced and open to imagination and magic.\n"
+        "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
+        "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
+        "flexibility of the material creates new affordances that supercede those in the physical "
+        "world, without breaking the rules of physics.\n"
+    </string>
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="slogan">On aime, on partage</string>
+
+    <string-array name="activity_area">
+        <item>Artisanat</item>
+        <item>Alimentaire</item>
+        <item>Bien-être</item>
+        <item>Décoration</item>
+        <item>Distribution</item>
+        <item>E-commerce</item>
+        <item>Hôtellerie</item>
+        <item>Immobilier</item>
+        <item>Informatique</item>
+        <item>Médical</item>
+        <item>Métallurgie</item>
+        <item>Nautisme</item>
+        <item>Paramédical</item>
+        <item>Restauration</item>
+        <item>Sécurité</item>
+        <item>Textile</item>
+        <item>Transport</item>
+        <item>Tourisme</item>
+        <item>Urbanisme</item>
+    </string-array>
+
+    <plurals name="numberOfShare">
+        <item quantity="one">%d partage</item>
+        <item quantity="other">%d partages</item>
+    </plurals>
+
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="message_share">Bonjour, je te conseille ce commerçant ** %1$s **\nsitué à l\'adresse : %2$s %3$s</string>
+</resources>

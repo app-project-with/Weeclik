@@ -1,0 +1,53 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!--
+    DONE : Theme de l'application
+    -->
+    <style name="WeeclikAppThemeCustom" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:statusBarColor">@color/white</item>
+        <!--item name="android:windowLightStatusBar">true</item-->
+
+        <item name="android:colorButtonNormal">@color/teal_500</item>
+        <item name="android:navigationBarColor">@color/white</item>
+
+        <item name="android:windowTranslucentStatus">true</item>
+        <!--item name="android:windowTranslucentNavigation">true</item-->
+    </style>
+
+    <style name="WeeclikAppThemeCustom.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="WeeclikAppThemeCustom.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="WeeclikActionBarCustom" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+    <style name="WeeclikSpinnerCustom" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:dropDownHeight">match_parent</item>
+        <item name="android:dropDownWidth">match_parent</item>
+    </style>
+
+</resources>
