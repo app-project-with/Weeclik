@@ -1,5 +1,8 @@
 package com.grace.weeclik.model;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 /**
  * com.grace.weeclik.our_objects
  * Created by grace on 06/05/2018.

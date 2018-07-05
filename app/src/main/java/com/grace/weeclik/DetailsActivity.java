@@ -20,14 +20,17 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.grace.weeclik.adapter.ViewPagerAdapter;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -43,7 +46,7 @@ import java.util.TimerTask;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    ParseUser commerce = ParseUser.getCurrentUser();    // commerce est un utilisateur
+    ParseUser commerce_user = ParseUser.getCurrentUser();    // commerce est un utilisateur
     ParseQuery<ParseObject> query = ParseQuery.getQuery("Commerce");
 
 
@@ -83,6 +86,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     private boolean peutPartager = true;
 
+
     ParseUser parseUser = ParseUser.getCurrentUser();
     ParseObject nb_share = new ParseObject("Commerce");
     ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Commerce");
@@ -103,6 +107,58 @@ public class DetailsActivity extends AppCompatActivity {
         autoSwipe();
 
 
+
+
+
+
+
+
+
+
+
+
+        if (aPartage()) {
+            // TODO Action quand je partage
+        } else {
+            // TODO Action quand j'ai déjà partagé
+        }
+    }
+
+    private boolean aPartage() {
+        boolean result = false;
+        if (parseUser != null) {
+
+            ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("_User");
+            parseQuery.whereEqualTo("objectId", parseUser.getObjectId());
+            parseQuery.getFirstInBackground(new GetCallback<ParseObject>() {
+                @Override
+                public void done(ParseObject object, ParseException e) {
+                    if (object == null) {
+                        Log.d("score", "The getFirst request failed.");
+                        Toast.makeText(getApplicationContext(), "BOFF ", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "__________________________ " +object.get("mes_partages"), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+            ArrayList<String> mes_partages = (ArrayList<String>) parseUser.get("mes_partages");
+            //Toast.makeText(this, "__________________________ " +ParseUser.getCurrentUser().getString("username"), Toast.LENGTH_LONG).show();
+            ArrayList<String> mes_partages_par_date = (ArrayList<String>) parseUser.get("mes_partages_dates");
+            int trouve = 0;
+            if (mes_partages != null) {
+                for (int i = 0; i < mes_partages.size(); i++) {
+                    if (mes_partages.get(i).equals(objectID)) {
+                        // TODO partage par date
+                        trouve += 1;
+                    }
+                }
+                if (trouve != 0) {
+                    result = true;
+                }
+            }
+        }
+        return result;
     }
 
     public void initView() {
@@ -313,12 +369,12 @@ public class DetailsActivity extends AppCompatActivity {
 
 
     private void queryDetail(String name) {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Commerce");
-        query.selectKeys(Arrays.asList("nomCommerce", "siteWeb", "adresse", "promotions", "mail", "tel", "description"))
+        //ParseQuery<ParseObject> query = ParseQuery.getQuery("Commerce");
+        query2.selectKeys(Arrays.asList("nomCommerce", "siteWeb", "adresse", "promotions", "mail", "tel", "description"))
                 .whereContains("nomCommerce", name);
         List<ParseObject> res = null;
         try {
-            res = query.find();
+            res = query2.find();
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -359,6 +415,7 @@ public class DetailsActivity extends AppCompatActivity {
         promo = res.get(0).getString("promotions");
         return res_link;
     }
+
 
 
     @SuppressLint("ValidFragment")

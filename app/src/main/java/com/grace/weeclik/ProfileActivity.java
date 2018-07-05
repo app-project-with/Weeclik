@@ -18,10 +18,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.grace.weeclik.adapter.CommerceAdapter;
 import com.grace.weeclik.model.Commerce;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -77,6 +79,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void getSharingCommerce() {
         if (parseUser != null) {
             getCommercesSharing();
+            //prepareCommercesSharing();
         }
 //        adapter.notifyDataSetChanged();
 //        adapter.notifyDataSetChanged();
@@ -84,8 +87,29 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void getCommercesSharing() {
         if (parseUser != null) {
-        ArrayList<String> mesPartages = (ArrayList<String>) parseUser.get("mes_partages");
-        Log.e("T------- ", ""+ parseUser.get("mes_partages"));
+        final ArrayList<String> mesPartages = null;//(ArrayList<String>) parseUser.get("mes_partages");
+
+
+        ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("_User");
+        parseQuery.whereEqualTo("objectId", parseUser.getObjectId());
+        parseQuery.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+                if (object == null) {
+                    Toast.makeText(getApplicationContext(), "BOFF ", Toast.LENGTH_LONG).show();
+                } else {
+                    //mesPartages = object.get("mes_partages");
+                    Toast.makeText(getApplicationContext(), ""+object.get("mes_partages").getClass().getName(), Toast.LENGTH_LONG).show();
+
+                    // va chercher dans la bd , la table "commerce"
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Commerce");
+                    ParseQuery<ParseObject> queryImg = ParseQuery.getQuery("Commerce_Photos");
+                    String imgId;
+                    System.out.println(object.get("mes_partages"));
+                }
+            }
+        });
+
         // va chercher dans la bd , la table "commerce"
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Commerce");
         ParseQuery<ParseObject> queryImg = ParseQuery.getQuery("Commerce_Photos");
@@ -124,6 +148,48 @@ public class ProfileActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();}
+    }
+
+    private void prepareCommercesSharing() {
+        if (parseUser != null) {
+            ArrayList<String> mespartages = (ArrayList<String>) parseUser.get("mes_partages");
+
+            Log.e("T------- ", ""+parseUser.get("objectId"));
+
+            ParseQuery<ParseObject> queryCommerce = ParseQuery.getQuery("Commerce");
+            ParseQuery<ParseObject> queryCommercePhoto = ParseQuery.getQuery("Commerce_Photos");
+            String imgId = "";
+
+            if (mespartages != null) {
+                for (int i = 0; i < mespartages.size(); i++) {
+                    queryCommerce.whereEqualTo("objectId", mespartages.get(i));
+                    List<ParseObject> resultsCommerce = null;
+                    try {
+                        resultsCommerce = queryCommerce.find();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    assert resultsCommerce != null;
+                    imgId = resultsCommerce.get(i).getParseObject("thumbnailPrincipal").getObjectId();
+                    queryCommercePhoto.whereEqualTo("objectId", imgId);
+                    List<ParseObject> resultsCommerceImg = null;
+                    try {
+                        resultsCommerceImg = queryCommercePhoto.find();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    if(resultsCommerceImg != null){
+                        commerces.add(new Commerce(resultsCommerce.get(i).getString("nomCommerce"), resultsCommerce.get(i).getInt("nombrePartages"), resultsCommerceImg.get(i).getParseFile("photo").getUrl()));
+                    }
+                }
+            }
+
+        }
+        //Collections.sort(commerceListPartager, Commerce.CommerceByNbShare);
+        adapter.notifyDataSetChanged();
+
     }
 
     public void isEmptyCommerce() {
